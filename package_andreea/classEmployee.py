@@ -66,6 +66,8 @@ class Operator(Employee):
         :param quantity:
         :param stock:
         """
+        #Trebuie sa verific cantitatea necesara cu cantitatea din stock(csv ul lu cristi) din lista de ingrediente din csv ul marinei
+        #dupa ce creez un produs, stockul scade si trb sa verificam daca stockul este suficient
         #Check if there is enough stock of the specified material
         if stock.get(material, 0) >= quantity:
             #if enough stock, reduce the quantity from the stock
@@ -126,7 +128,7 @@ class Manager(Employee):
 
 
 class StockKeeper(Employee):
-    def __init__(self, name, age, salary, hire_date, specialization, competence_level, section, stock):
+    def __init__(self, name, age, salary, hire_date, specialization, competence_level):
         """
         Initializes a StockKeeper object, which is a type of Employee
         :param name:
@@ -135,12 +137,11 @@ class StockKeeper(Employee):
         :param hire_date:
         :param specialization:
         :param competence_level:
-        :param section:
         :param stock:
         """
         super().__init__(name, age, "StockKeeper", salary, hire_date, specialization, competence_level)
-        self.section = section
-        self.stock = stock
+
+        self.stock = "path ul spre csv ul lui cristi"
 
 
     def display_stock(self):
@@ -149,7 +150,7 @@ class StockKeeper(Employee):
         """
         print(f"Stock managed by {self.name}:")
         #Loop through each material and quantity in the stock dictionary
-        for material, quantity in self.stock.items():
+        for material, quantity in self.stock.items(): # to-do iter_rows
             print(f"{material}: {quantity} units")
 
 
@@ -181,15 +182,17 @@ class StockKeeper(Employee):
 if __name__ == "__main__":
     file_path = "employees.csv"
     employees_df = pd.read_csv(file_path)
-    print("Initial Employee List:")
-    print(employees_df[['Name','Role']].to_string(index=False)) #Display without index
+    #print("Initial Employee List:")
+    #print(employees_df[['Name','Role']].to_string(index=False)) #Display without index
     #manager = Manager("Bob J.",54,"10/10/2010",5500,"Performance Monitoring","Advanced",19)
     # employees_df = manager.remove_employees(employees_df, "Bob J.", file_path)
-    #manager1 = Manager("Eve Y.",59,"20/06/2005",3500,"Biscuit Production","Intermediate",31)
-    # employees_df = manager1.remove_employees(employees_df, "Eve Y.", file_path)
-    # print(employees_df)
-    # manager.display_employees(file_path)
+    manager1 = Manager("Eve Y.",59,"20/06/2005",3500,"Biscuit Production","Intermediate",31)
+    employees_df = manager1.remove_employees(employees_df, "Charlie U.", file_path)
+    #print(employees_df)
+    manager1.display_employees(file_path)
     # stock = {"White chocolate":100, "Caramel":40}
     # operator = Operator("Alice Q.",29,"26/06/2023",3000,"Quality Control","Advanced",17)
     # operator.process_material("Caramel", 30, stock)
+    # print(f"Noul stock este {stock}")
     # operator.process_material("Caramel", 20, stock)
+
