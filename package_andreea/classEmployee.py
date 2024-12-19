@@ -58,26 +58,23 @@ class Operator(Employee):
         super().__init__(name, age, "Operator", hire_date, salary, specialization, competence_level)
         self.products_processed = products_processed
 
+    def place_order(self, product_name, ingredients_list, stock):
 
-    def process_material(self, material, quantity, stock):
-        """
-        Processes a material by reducing the stock and increasing the number of products processed
-        :param material:
-        :param quantity:
-        :param stock:
-        """
-        #Trebuie sa verific cantitatea necesara cu cantitatea din stock(csv ul lu cristi) din lista de ingrediente din csv ul marinei
-        #dupa ce creez un produs, stockul scade si trb sa verificam daca stockul este suficient
-        #Check if there is enough stock of the specified material
-        if stock.get(material, 0) >= quantity:
-            #if enough stock, reduce the quantity from the stock
-            stock[material] = stock[material] - quantity
-            #increase the number of the products processed by the operator
-            self.products_processed = self.products_processed + quantity
-            print(f"{self.name} processed {quantity} units of {material}. Total processed: {self.products_processed}")
+        #Verify if ingredients are sufficient using the stock class method
+        if stock.verify_product_details(product_name, ingredients_list, stock):
+            print(f"Producing {product_name} ...")
+
+            #If stock has sufficient ingredients, decrease the stock for each ingredient used
+            for ingredient, quantity in ingredients_list:
+                stock.decrease_stock(ingredient, quantity) #Decrease the stock of raw materials
+
+            #Add the finished product to the stock
+            stock.add_product_in_stock(product_name, 1) #Assuming the quantity of finished product is 1
+            self.products_processed += 1 #Update the processed products count
+            print(f"{product_name} has been successfully produced. Total processed: {self.products_processed}")
         else:
-            print(f"{self.name}: Not enough stock for {material}. Notify the Manager.")
-
+            print(f"Not enough stock to produce {product_name}. Please inform the StockKeeper.")
+            #If not enough stock, ask the StockKeeper to add ingredients
 
 class Manager(Employee):
     def __init__(self, name, age, hire_date, salary, specialization, competence_level, team_size):
@@ -94,6 +91,43 @@ class Manager(Employee):
         super().__init__(name, age, "Manager", hire_date, salary, specialization, competence_level)
         self.team_size = team_size
 
+    def add_employees(self, file_path):
+        """
+        Adds a new employee to the CSV file by asking for user input
+        :param file_path:
+        """
+        while True:
+            print("Enter the data for the new employee(Name, Age, Role, Hire Date, Salary, Specialization, Competence Level")
+            data = input("Please enter employee details: ")
+            employee_data = data.split(",") #Split the input string into a list base on commas
+
+            if len(employee_data) != 7:
+                print("Invalid number of information. Please enter exactly 7 pieces of information.")
+                continue #If the input is invalid, ask for the input again
+
+            name, age, role, hire_date, salary, specialization, competence_level = [item.strip() for item in employee_data] #Remove any extra spaces and assign the
+                                                                                                                            #values to respective variables
+            new_employee = Employee(name, int(age), role, hire_date, int(salary), specialization, competence_level) #Create a new Employee object
+
+            employees_df = pd.read_csv(file_path)
+            #Prepare the new employee's data for adding to the DataFrame
+            new_employee_data = {
+                'Name': new_employee.name,
+                'Age': new_employee.age,
+                'Role': new_employee.role,
+                'Hire Date': new_employee.hire_date,
+                'Salary': new_employee.salary,
+                'Specialization': new_employee.specialization,
+                'Competence Level': new_employee.competence_level
+            }
+            new_employee_df = pd.DataFrame([new_employee_data]) #Create a DataFrame from the new employee's data
+            employees_df = pd.concat([employees_df, new_employee_df], ignore_index=True) #Append the new employee's data to the existing Dataframe
+            write_csv_file(employees_df, file_path) #Write the updated DataFrame back to the CSV file
+            print(f"Employee {new_employee.name} has been successfully added to the CSV file.")
+            add_another = input("Do you want to add another employee? (y/n): ")
+            if add_another != 'y':
+                print("Employee addition process has been completed.")
+                break #Exit the loop if the user does not want to add more employees
 
     def display_employees(self, file_path):
         """
@@ -106,25 +140,36 @@ class Manager(Employee):
         print(employees_df[['Name', 'Age', 'Role','Hire Date', 'Salary', 'Specialization', 'Competence Level']])
 
 
-    def remove_employees(self, employees, name, file_path):
+    def remove_employees(self, file_path):
         """
         Removes an employee from the list based on their name
-        :param employees:
-        :param name:
         :param file_path:
-        :return: The updated DataFrame with the employee removed
         """
-        #Filter the employee with the specified name from DataFrame
-        updated_employees = employees[employees['Name'] != name]
-        #Check if the number of the rows in the original DataFrame is the same as the filtered one
-        #If no rows were removed, it means no employee, with the give name was found
-        if len(employees) == len(updated_employees):
-            print(f"No employee found with the name: {name}")
-        else:
-            print(f"Employee {name} has been removed")
-            #Update the csv file with updated list of employees
-            write_csv_file(updated_employees, file_path) #update de csv file after remove
-        return updated_employees
+        while True:
+            name = input("Please enter the name of the employee you want to remove: ")
+            employees_df = pd.read_csv(file_path)
+
+            if name not in employees_df['Name'].values: #Check if the employee exists in the DataFrame
+                print(f"No employee found with the name: {name}")
+            else:
+                #Filter the employee with the specified name from DataFrame
+                updated_employees = employees_df[employees_df['Name'] != name]
+
+                #Check if the number of the rows in the original DataFrame is the same as the filtered one
+                #If no rows were removed, it means no employee, with the give name was found
+                if len(employees_df) == len(updated_employees):
+                    print(f"No employee found with the name: {name}")
+                else:
+                    print(f"Employee {name} has been removed")
+                    #Update the csv file with updated list of employees
+                    write_csv_file(updated_employees, file_path) #update de csv file after remove
+            #Ask the user if want to remove another employee
+            remove_another = input("Do you want to remove another employee? (y/n): ")
+
+            #If the user doesn't want to remove another employee, exit the loop
+            if remove_another != 'y':
+                print("Employee removal process has been completed.")
+                break
 
 
 class StockKeeper(Employee):
@@ -182,17 +227,7 @@ class StockKeeper(Employee):
 if __name__ == "__main__":
     file_path = "employees.csv"
     employees_df = pd.read_csv(file_path)
-    #print("Initial Employee List:")
-    #print(employees_df[['Name','Role']].to_string(index=False)) #Display without index
-    #manager = Manager("Bob J.",54,"10/10/2010",5500,"Performance Monitoring","Advanced",19)
-    # employees_df = manager.remove_employees(employees_df, "Bob J.", file_path)
-    manager1 = Manager("Eve Y.",59,"20/06/2005",3500,"Biscuit Production","Intermediate",31)
-    employees_df = manager1.remove_employees(employees_df, "Charlie U.", file_path)
+    #manager = Manager("Hannah Z.", 38, "01/08/2021", 3000, "Resource Allocation", "Expert", 10)
     #print(employees_df)
-    manager1.display_employees(file_path)
-    # stock = {"White chocolate":100, "Caramel":40}
-    # operator = Operator("Alice Q.",29,"26/06/2023",3000,"Quality Control","Advanced",17)
-    # operator.process_material("Caramel", 30, stock)
-    # print(f"Noul stock este {stock}")
-    # operator.process_material("Caramel", 20, stock)
-
+    #employees_df = manager.remove_employees(file_path)
+    #manager.add_employees(file_path)
