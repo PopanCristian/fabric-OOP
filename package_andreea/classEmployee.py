@@ -42,7 +42,6 @@ class Employee:
         return (f"Name: {self.name}, Age: {self.age}, Role: {self.role}, Hire Date: {self.hire_date},"
                 f"Salary: {self.salary},Specialization: {self.specialization}, Competence Level: {self.competence_level}")
 
-
 class Operator(Employee):
     def __init__(self, name, age, hire_date, salary, specialization, competence_level, products_processed):
         """
@@ -171,7 +170,6 @@ class Manager(Employee):
             if remove_another != 'y':
                 print("Employee removal process has been completed.")
                 break
-
 
 class StockKeeper(Employee):
     def __init__(self, name, age, salary, hire_date, specialization, competence_level, stock):
