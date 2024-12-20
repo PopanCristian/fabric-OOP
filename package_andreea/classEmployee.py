@@ -58,7 +58,7 @@ class Operator(Employee):
         super().__init__(name, age, "Operator", hire_date, salary, specialization, competence_level)
         self.products_processed = products_processed
 
-    def place_order(self, product_name, ingredients_list, stock):
+    def place_order(self, product_name, ingredients_list, stock, stock_keeper):
 
         #Verify if ingredients are sufficient using the stock class method
         if stock.verify_product_details(product_name, ingredients_list, stock):
@@ -75,6 +75,7 @@ class Operator(Employee):
         else:
             print(f"Not enough stock to produce {product_name}. Please inform the StockKeeper.")
             #If not enough stock, ask the StockKeeper to add ingredients
+            stock_keeper.supply_ingredients(product_name, ingredients_list, stock)
 
 class Manager(Employee):
     def __init__(self, name, age, hire_date, salary, specialization, competence_level, team_size):
@@ -173,7 +174,7 @@ class Manager(Employee):
 
 
 class StockKeeper(Employee):
-    def __init__(self, name, age, salary, hire_date, specialization, competence_level):
+    def __init__(self, name, age, salary, hire_date, specialization, competence_level, stock):
         """
         Initializes a StockKeeper object, which is a type of Employee
         :param name:
@@ -185,18 +186,38 @@ class StockKeeper(Employee):
         :param stock:
         """
         super().__init__(name, age, "StockKeeper", salary, hire_date, specialization, competence_level)
+        self.stock = 'stock.csv'
 
-        self.stock = "path ul spre csv ul lui cristi"
-
-
-    def display_stock(self):
+    def supply_ingredients(self, ingredients_list):
         """
-        Displays the stock managed by the stockKeeper
+         If not enough stock exists for a product, supply the required ingredients by adding extra stock.
+        :param ingredients_list:
         """
-        print(f"Stock managed by {self.name}:")
-        #Loop through each material and quantity in the stock dictionary
-        for material, quantity in self.stock.items(): # to-do iter_rows
-            print(f"{material}: {quantity} units")
+        #Loop through the ingredients and check if they are available
+        for ingredient, required_quantity in ingredients_list:
+            stock_df = pd.read_csv("stock.csv") #Read the current stock data
+
+        #Check if the ingredient exists and if there is enough in stock
+        current_stock = stock_df.loc[stock_df['Product'] == ingredient, 'Quantity'].values
+
+        if len(current_stock) == 0 or current_stock[0] < required_quantity:
+            #If stock is insufficient, calculate how much to add
+            missing_quantity =  required_quantity - current_stock[0] if len(current_stock) > 0 else required_quantity
+            extra_quantity = missing_quantity + (missing_quantity * 0.2) #Add 20% more
+
+            print(f"Not enough stock for {ingredient}. Adding {int(extra_quantity)} units.")
+
+            #Call the add_ingredient_in_stock method form the Stock class to add the missing ingredients
+            self.stock.add_ingredient_in_stock(ingredient, int(extra_quantity))
+        else:
+            print(f"Stock for {ingredient} is sufficient.")
+
+
+    def show_stock(self):
+        """
+        Calls the display_stock method from Stock to display the current stock.
+        """
+        self.stock.display_stock() #Call the display_stock method from Stock to display the stock
 
 
     def update_stock(self, material, quantity):
