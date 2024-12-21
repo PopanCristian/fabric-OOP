@@ -1,6 +1,9 @@
 Name,Age,Role,Hire Date,Salary,Specialization,Competence Level,Products_Processed
-Grace G.,44,Operator,19/06/2012,3000,Quality Control,Intermediate,2
-Hannah Z.,38,Manager,01/08/2021,3000,Resource Allocation,Expert,
-Grace J.,51,Manager,06/05/2015,3000,Resource Allocation,Intermediate,
-Grace E.,34,Operator,07/11/2022,4500,Quality Control,Beginner,4
-Charlie E.,49,Stockkeeper,25/08/2023,3000,Order Preparation,Beginner,
+Grace G.,44,Operator,19/06/2012,3000.0,Quality Control,Intermediate,2.0
+Hannah Z.,38,Manager,01/08/2021,3000.0,Resource Allocation,Expert,
+Grace J.,51,Manager,06/05/2015,3000.0,Resource Allocation,Intermediate,
+Grace E.,34,Operator,07/11/2022,4500.0,Quality Control,Beginner,4.0
+Charlie E.,49,Stockkeeper,25/08/2023,3000.0,Order Preparation,Beginner,
+Ana K.,23,Operator,14/12/2010,3000.0,Quality Control,Beginner,
+Maria D.,40,StockKeeper,21/03/2017,4000.0,Order Preparation,Expert,
+Ben S.,36,Manager,07/03/2023,3000.0,Resource Allocation,Intermediate,
