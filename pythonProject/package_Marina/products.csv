@@ -1,6 +1,7 @@
-Denumire,Ingrediente,Pret
-Ciocolata cu lapte,"[{""Lapte praf"": 2}, {""Cacao"": 3}, {""Zah\u0103r"": 4}, {""Unt de cacao"": 1}]",15.0
-Ciocolata neagra,"[{""Cacao"": 5}, {""Zah\u0103r"": 3}, {""Unt de cacao"": 2}]",20.0
-Ciocolata alba,"[{""Lapte praf"": 4}, {""Zah\u0103r"": 5}, {""Unt de cacao"": 3}]",18.0
-Ciocolata cu alune,"[{""Cacao"": 3}, {""Zah\u0103r"": 4}, {""Unt de cacao"": 2}, {""Alune"": 3}]",22.5
-Ciocolata cu menta,"[{""Cacao"": 3}, {""Zah\u0103r"": 4}, {""Unt de cacao"": 2}, {""Extract de ment\u0103"": 1}]",19.5
+Name,Ingredients,Price
+Milk Chocolate,"[{""Milk Powder"": 2}, {""Cocoa"": 3}, {""Sugar"": 4}, {""Cocoa Butter"": 1}]",15.0
+Dark Chocolate,"[{""Cocoa"": 5}, {""Sugar"": 3}, {""Cocoa Butter"": 2}]",20.0
+White Chocolate,"[{""Milk Powder"": 4}, {""Sugar"": 5}, {""Cocoa Butter"": 3}]",18.0
+Hazelnut Chocolate,"[{""Cocoa"": 3}, {""Sugar"": 4}, {""Cocoa Butter"": 2}, {""Hazelnuts"": 3}]",22.5
+Mint Chocolate,"[{""Cocoa"": 3}, {""Sugar"": 4}, {""Cocoa Butter"": 2}, {""Mint Extract"": 1}]",19.5
+Croisssant chocolate,"cocoa, sugar, butter",7.5

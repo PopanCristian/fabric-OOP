@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6d51135-f0fb-46fa-afd2-eb57363b38bb" name="Changes" comment="" />
+    <list default="true" id="d6d51135-f0fb-46fa-afd2-eb57363b38bb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/package_Marina/CLass_Products.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/package_Marina/CLass_Products.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/package_Marina/products.csv" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/package_Marina/products.csv" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,9 +25,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2q8UwNCBtQSpLjDjeNnxBvGrLoh" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -30,15 +35,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-<<<<<<< Updated upstream
-    "RunOnceActivity.ShowReadmeOnStart": "true"
-=======
+    "Python.CLass_Products.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main"
->>>>>>> Stashed changes
+    "git-widget-placeholder": "Marina",
+    "last_opened_file_path": "/Users/murarumarina/Documents/IT_SCHOOL/Fabrica_Proiect/Fabric_Project/fabric-OOP/pythonProject/package_Marina"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pythonProject/package_Marina" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/pythonProject" />
     </key>
