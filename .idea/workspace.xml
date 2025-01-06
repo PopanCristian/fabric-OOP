@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d6d51135-f0fb-46fa-afd2-eb57363b38bb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pythonProject/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pythonProject/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/package_Marina/CLass_Products.py" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/package_Marina/CLass_Products.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pythonProject/package_Marina/products.csv" beforeDir="false" afterPath="$PROJECT_DIR$/pythonProject/package_Marina/products.csv" afterDir="false" />
     </list>
@@ -46,6 +46,7 @@
       <recent name="$PROJECT_DIR$/pythonProject/package_Marina" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/pythonProject/package_Marina" />
       <recent name="$PROJECT_DIR$/pythonProject" />
     </key>
   </component>
