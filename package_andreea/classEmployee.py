@@ -14,7 +14,7 @@ def write_csv_file(df, file_path):
 
 
 class Employee:
-    def __init__(self, name, age, role, hire_date, salary, specialization, competence_level):
+    def __init__(self, name, age, role, hire_date, salary):
         """
         Initializes an Employee object with basic employee information
         :param name:
@@ -22,16 +22,12 @@ class Employee:
         :param role:
         :param hire_date:
         :param salary:
-        :param specialization:
-        :param competence_level:
         """
         self.name = name
         self.age = age
         self.role = role
         self.salary = salary
         self.hire_date = hire_date
-        self.specialization = specialization
-        self.competence_level = competence_level
 
 
     def display_info(self):
@@ -40,21 +36,19 @@ class Employee:
         :return: A string containing the employee's details
         """
         return (f"Name: {self.name}, Age: {self.age}, Role: {self.role}, Hire Date: {self.hire_date},"
-                f"Salary: {self.salary},Specialization: {self.specialization}, Competence Level: {self.competence_level}")
+                f"Salary: {self.salary}")
 
 class Operator(Employee):
-    def __init__(self, name, age, hire_date, salary, specialization, competence_level, products_processed):
+    def __init__(self, name, age, hire_date, salary, products_processed):
         """
         Initializes and Operator object, which is a type of Employee
         :param name:
         :param age:
         :param hire_date:
         :param salary:
-        :param specialization:
-        :param competence_level:
         :param products_processed:
         """
-        super().__init__(name, age, "Operator", hire_date, salary, specialization, competence_level)
+        super().__init__(name, age, "Operator", hire_date, salary)
         self.products_processed = products_processed
 
     def place_order(self, product_name, ingredients_list, stock, stock_keeper):
@@ -77,19 +71,15 @@ class Operator(Employee):
             stock_keeper.supply_ingredients(product_name, ingredients_list, stock)
 
 class Manager(Employee):
-    def __init__(self, name, age, hire_date, salary, specialization, competence_level, team_size):
+    def __init__(self, name, age, hire_date, salary):
         """
         Initializes a Manager object, which is a type of Employee
         :param name:
         :param age:
         :param hire_date:
         :param salary:
-        :param specialization:
-        :param competence_level:
-        :param team_size:
         """
-        super().__init__(name, age, "Manager", hire_date, salary, specialization, competence_level)
-        self.team_size = team_size
+        super().__init__(name, age, "Manager", hire_date, salary)
 
     def add_employees(self, file_path):
         """
@@ -97,17 +87,23 @@ class Manager(Employee):
         :param file_path:
         """
         while True:
-            print("Enter the data for the new employee(Name, Age, Role, Hire Date, Salary, Specialization, Competence Level")
+            print("Enter the data for the new employee")
+            print("-Name: In the format FirstName LastInitial, e.g. Andreea B.")
+            print("-Age: A whole number, e.g. 22")
+            print("-Role: Choose from Manager, Operator, StockKeeper")
+            print("-Hire Date: In the format dd/mm/yyyy, e.g. 01/01/2023")
+            print("-Salary: A numeric value, e.g. 3000")
+            print("-Separate the values by commas, e.g. Andreea B., 22, Manager, 01/01/2023, 3000")
             data = input("Please enter employee details: ")
             employee_data = data.split(",") #Split the input string into a list base on commas
 
-            if len(employee_data) != 7:
-                print("Invalid number of information. Please enter exactly 7 pieces of information.")
+            if len(employee_data) != 5:
+                print("Invalid number of information. Please enter exactly 5 pieces of information.")
                 continue #If the input is invalid, ask for the input again
 
-            name, age, role, hire_date, salary, specialization, competence_level = [item.strip() for item in employee_data] #Remove any extra spaces and assign the
+            name, age, role, hire_date, salary = [item.strip() for item in employee_data] #Remove any extra spaces and assign the
                                                                                                                             #values to respective variables
-            new_employee = Employee(name, int(age), role, hire_date, int(salary), specialization, competence_level) #Create a new Employee object
+            new_employee = Employee(name, int(age), role, hire_date, int(salary)) #Create a new Employee object
 
             employees_df = pd.read_csv(file_path)
             #Prepare the new employee's data for adding to the DataFrame
@@ -117,17 +113,12 @@ class Manager(Employee):
                 'Role': new_employee.role,
                 'Hire Date': new_employee.hire_date,
                 'Salary': new_employee.salary,
-                'Specialization': new_employee.specialization,
-                'Competence Level': new_employee.competence_level
             }
             new_employee_df = pd.DataFrame([new_employee_data]) #Create a DataFrame from the new employee's data
             employees_df = pd.concat([employees_df, new_employee_df], ignore_index=True) #Append the new employee's data to the existing Dataframe
             write_csv_file(employees_df, file_path) #Write the updated DataFrame back to the CSV file
             print(f"Employee {new_employee.name} has been successfully added to the CSV file.")
-            add_another = input("Do you want to add another employee? (y/n): ")
-            if add_another != 'y':
-                print("Employee addition process has been completed.")
-                break #Exit the loop if the user does not want to add more employees
+            break
 
     def display_employees(self, file_path):
         """
@@ -137,7 +128,7 @@ class Manager(Employee):
         #Read employees from csv file
         employees_df = pd.read_csv(file_path)
         print(f"Employees list:")
-        print(employees_df[['Name', 'Age', 'Role','Hire Date', 'Salary', 'Specialization', 'Competence Level']])
+        print(employees_df[['Name', 'Age', 'Role','Hire Date', 'Salary']])
 
 
     def remove_employees(self, file_path):
@@ -163,28 +154,20 @@ class Manager(Employee):
                     print(f"Employee {name} has been removed")
                     #Update the csv file with updated list of employees
                     write_csv_file(updated_employees, file_path) #update de csv file after remove
-            #Ask the user if want to remove another employee
-            remove_another = input("Do you want to remove another employee? (y/n): ")
-
-            #If the user doesn't want to remove another employee, exit the loop
-            if remove_another != 'y':
-                print("Employee removal process has been completed.")
                 break
 
 class StockKeeper(Employee):
-    def __init__(self, name, age, salary, hire_date, specialization, competence_level, stock):
+    def __init__(self, name, age, salary, hire_date, stock: Stock):
         """
         Initializes a StockKeeper object, which is a type of Employee
         :param name:
         :param age:
         :param salary:
         :param hire_date:
-        :param specialization:
-        :param competence_level:
         :param stock:
         """
-        super().__init__(name, age, "StockKeeper", salary, hire_date, specialization, competence_level)
-        self.stock = 'stock.csv'
+        super().__init__(name, age, "StockKeeper", salary, hire_date)
+        self.stock = stock
 
     def supply_ingredients(self, ingredients_list):
         """
@@ -193,7 +176,7 @@ class StockKeeper(Employee):
         """
         #Loop through the ingredients and check if they are available
         for ingredient, required_quantity in ingredients_list:
-            stock_df = pd.read_csv("stock.csv") #Read the current stock data
+            stock_df = pd.read_csv("package_cristi/stock.csv") #Read the current stock data
 
         #Check if the ingredient exists and if there is enough in stock
         current_stock = stock_df.loc[stock_df['Product'] == ingredient, 'Quantity'].values
@@ -217,37 +200,28 @@ class StockKeeper(Employee):
         """
         self.stock.display_stock() #Call the display_stock method from Stock to display the stock
 
-
     def update_stock(self, material, quantity):
         """
         Updates the stock of a specific material
         :param material:
         :param quantity:
         """
-        #Check if the material exist in stock
+        # Check if the material exist in stock
         if material in self.stock:
-            #If quantity is positive, add to the existing stock
+            # If quantity is positive, add to the existing stock
             if quantity > 0:
                 self.stock[material] = self.stock[material] + quantity
                 print(f"Stock updated: {material} +{quantity} units. New quantity: {self.stock[material]} units")
-            #If quantity is negative, reduce the stock, but not below zero
+            # If quantity is negative, reduce the stock, but not below zero
             elif quantity < 0:
-                if self.stock[material] + quantity >= 0: #Ensure the stock doesn't go negative
-                    self.stock[material] =  self.stock[material] + quantity
-                    print(f"Stock updated: {material} -{abs(quantity)} units. New quantity: {self.stock[material]} units")
+                if self.stock[material] + quantity >= 0:  # Ensure the stock doesn't go negative
+                    self.stock[material] = self.stock[material] + quantity
+                    print(
+                        f"Stock updated: {material} -{abs(quantity)} units. New quantity: {self.stock[material]} units")
                 else:
-                   #If trying to reduce more than available, print an error message
+                    # If trying to reduce more than available, print an error message
                     print(f"Error: Not enough stock of {material} to reduce by {abs(quantity)} units.")
             else:
-                #If the material does not exist in the stock, add it with the given quantity
+                # If the material does not exist in the stock, add it with the given quantity
                 self.stock[material] = quantity
                 print(f"New material {material} added to stock with {quantity} units.")
-
-if __name__ == "__main__":
-    file_path = "employees.csv"
-    employees_df = pd.read_csv(file_path)
-    #manager = Manager("Hannah Z.", 38, "01/08/2021", 3000, "Resource Allocation", "Expert", 10)
-    #print(employees_df)
-    #employees_df = manager.remove_employees(file_path)
-    #manager.add_employees(file_path)
-
