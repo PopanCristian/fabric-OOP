@@ -1,0 +1,1 @@
+from package_cristi import class_stock

@@ -1,4 +1,5 @@
 import pandas as pd
+from package_cristi.class_stock import Stock
 
 def read_csv_file(file_path):
     """
@@ -86,6 +87,8 @@ class Manager(Employee):
         Adds a new employee to the CSV file by asking for user input
         :param file_path:
         """
+        #TODO coloanele competence level,specialization, products_processed trebuie eliminate( prea multe detalii de care nu ne folosim)
+        #TODO cand se fac adaugarea unui nou angajat cand cerem detaliile despre angajat trebuie sa dam exemplu acolo unde trebuie, ex. data angajarii)
         while True:
             print("Enter the data for the new employee")
             print("-Name: In the format FirstName LastInitial, e.g. Andreea B.")
@@ -94,6 +97,7 @@ class Manager(Employee):
             print("-Hire Date: In the format dd/mm/yyyy, e.g. 01/01/2023")
             print("-Salary: A numeric value, e.g. 3000")
             print("-Separate the values by commas, e.g. Andreea B., 22, Manager, 01/01/2023, 3000")
+            
             data = input("Please enter employee details: ")
             employee_data = data.split(",") #Split the input string into a list base on commas
 
@@ -137,8 +141,10 @@ class Manager(Employee):
         :param file_path:
         """
         while True:
-            name = input("Please enter the name of the employee you want to remove: ")
             employees_df = pd.read_csv(file_path)
+            print(employees_df['Name'])
+            name = input("Please enter the name of the employee you want to remove: ")
+
 
             if name not in employees_df['Name'].values: #Check if the employee exists in the DataFrame
                 print(f"No employee found with the name: {name}")
@@ -166,6 +172,7 @@ class StockKeeper(Employee):
         :param hire_date:
         :param stock:
         """
+
         super().__init__(name, age, "StockKeeper", salary, hire_date)
         self.stock = stock
 
@@ -224,4 +231,6 @@ class StockKeeper(Employee):
             else:
                 # If the material does not exist in the stock, add it with the given quantity
                 self.stock[material] = quantity
+
                 print(f"New material {material} added to stock with {quantity} units.")
+
