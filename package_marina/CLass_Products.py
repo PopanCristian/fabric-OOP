@@ -37,9 +37,13 @@ class Product:
         if not cls.products:
             print("There are no registered products")
         else:
-            print("List of products:")
+            print("\nList of products:")
+            unique_products = []
             for another_product in cls.products:
-                print(another_product)
+                if another_product.product not in unique_products: #daca deja exista in lista trecem peste
+                    unique_products.append(another_product.product)
+                    print(another_product.product)
+            print("\n")
 
 
     @staticmethod
@@ -63,27 +67,18 @@ class Product:
             else:
                 print("Invalid answer! Please introduce 'yes' or 'no'.")
 
-
-
-
-
 #delete a product base its name
     @classmethod
     def delete_product(cls, name_file):
-    #     found_product = False
-    #     for product in cls.products:
-    #         if product.product == product_name:
-    #             cls.products.remove(product)
-    #             product_name = True
-    #             print(f" The product '{product_name}' has been deleted.")
-    #             break
-    #     if not found_product:
-    #         print(f"The product '{product_name}' was not found.")
+
         while True:
             del_answer = input("Do you want to delete a product? Yes/No").strip().lower()
             if del_answer == 'no':
                 break
             elif del_answer == 'yes':
+                # TODO functia de cautare a obiectului dorit nu merge
+                df = pd.read_csv(name_file)
+                print(df['Name'])
                 product_name = input("Introduce the product you want to delete: ").strip()
                 updated_products = [p for p in Product.products if p.product.lower() != product_name.lower()] #filtered the list to keep the products that does not corespund to the given name
                 if len(updated_products) == len(Product.products): #check if the product was founded

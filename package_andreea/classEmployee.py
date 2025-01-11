@@ -1,4 +1,5 @@
 import pandas as pd
+from package_cristi.class_stock import Stock
 
 def read_csv_file(file_path):
     """
@@ -96,8 +97,10 @@ class Manager(Employee):
         Adds a new employee to the CSV file by asking for user input
         :param file_path:
         """
+        #TODO coloanele competence level,specialization, products_processed trebuie eliminate( prea multe detalii de care nu ne folosim)
+        #TODO cand se fac adaugarea unui nou angajat cand cerem detaliile despre angajat trebuie sa dam exemplu acolo unde trebuie, ex. data angajarii)
         while True:
-            print("Enter the data for the new employee(Name, Age, Role, Hire Date, Salary, Specialization, Competence Level")
+            print("Enter the data for the new employee(ex. :Name, Age, Role, Hire Date, Salary, Specialization, Competence Level")
             data = input("Please enter employee details: ")
             employee_data = data.split(",") #Split the input string into a list base on commas
 
@@ -146,8 +149,10 @@ class Manager(Employee):
         :param file_path:
         """
         while True:
-            name = input("Please enter the name of the employee you want to remove: ")
             employees_df = pd.read_csv(file_path)
+            print(employees_df['Name'])
+            name = input("Please enter the name of the employee you want to remove: ")
+
 
             if name not in employees_df['Name'].values: #Check if the employee exists in the DataFrame
                 print(f"No employee found with the name: {name}")
@@ -172,7 +177,7 @@ class Manager(Employee):
                 break
 
 class StockKeeper(Employee):
-    def __init__(self, name, age, salary, hire_date, specialization, competence_level, stock):
+    def __init__(self, name, age, salary, hire_date, specialization, competence_level, stock: Stock):
         """
         Initializes a StockKeeper object, which is a type of Employee
         :param name:
@@ -184,7 +189,7 @@ class StockKeeper(Employee):
         :param stock:
         """
         super().__init__(name, age, "StockKeeper", salary, hire_date, specialization, competence_level)
-        self.stock = 'stock.csv'
+        self.stock = stock
 
     def supply_ingredients(self, ingredients_list):
         """
@@ -193,7 +198,7 @@ class StockKeeper(Employee):
         """
         #Loop through the ingredients and check if they are available
         for ingredient, required_quantity in ingredients_list:
-            stock_df = pd.read_csv("stock.csv") #Read the current stock data
+            stock_df = pd.read_csv("package_cristi/stock.csv") #Read the current stock data
 
         #Check if the ingredient exists and if there is enough in stock
         current_stock = stock_df.loc[stock_df['Product'] == ingredient, 'Quantity'].values
@@ -247,6 +252,7 @@ if __name__ == "__main__":
     file_path = "employees.csv"
     employees_df = pd.read_csv(file_path)
     #manager = Manager("Hannah Z.", 38, "01/08/2021", 3000, "Resource Allocation", "Expert", 10)
+    manager = Manager("Marina M", 25, "01/08/2000", 8000, "Resource Allocation", "Expert", 10)
     #print(employees_df)
     #employees_df = manager.remove_employees(file_path)
     #manager.add_employees(file_path)
