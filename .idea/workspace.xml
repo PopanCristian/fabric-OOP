@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6d51135-f0fb-46fa-afd2-eb57363b38bb" name="Changes" comment="" />
+    <list default="true" id="d6d51135-f0fb-46fa-afd2-eb57363b38bb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/fabric-OOP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fabric-OOP.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package_marina/CLass_Products.py" beforeDir="false" afterPath="$PROJECT_DIR$/package_marina/CLass_Products.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package_marina/products.csv" beforeDir="false" afterPath="$PROJECT_DIR$/package_marina/products.csv" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
