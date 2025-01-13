@@ -96,7 +96,7 @@ if __name__ == "__main__":
         #Optiunea 8. Aceeasi metoda ca la 4.2 dar separat de momentul adaugarii.
         # # o metoda in clasa stock ce va adauga materie prima add_ingredient_in_stock(name_ingredient,quantity)
         elif choice == "8":
-            pass
+            stockKeeper.supply_ingredients()
         elif choice == "0":
             break
 
