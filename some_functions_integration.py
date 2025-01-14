@@ -1,7 +1,6 @@
-import csv
+
 import ast
 
-# Citim ingredientele pentru produsul dorit
 import csv
 
 def get_ingredients_for_product(product_name, products_file_path):
@@ -9,9 +8,6 @@ def get_ingredients_for_product(product_name, products_file_path):
         reader = csv.DictReader(file)
         for row in reader:
             if row['Name'].strip().lower() == product_name.strip().lower():
-                # Separăm ingredientele prin virgulă și le transformăm într-o listă
-                ingredients = row['Ingredients'].split(',')
-                # Curățăm fiecare ingredient de eventuale spații suplimentare
-                ingredients = [ingredient.strip() for ingredient in ingredients]
+                ingredients = ast.literal_eval(row['Ingredients']) # from string to list of dicts
                 return ingredients
     return None

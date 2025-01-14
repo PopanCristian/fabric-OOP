@@ -42,8 +42,8 @@ class Product:
     @staticmethod
     def add_product(name_file):
         while True:
-            answer = input().strip().lower() #delete white spaces and convert the input to lowercase
-            # "Do you want to add a new product? (Yes/No): "
+            answer = input("Do you want to add a new product? (Yes/No): ").strip().lower() #delete white spaces and convert the input to lowercase
+            #
             if answer == 'no':
                 break
             elif answer == 'yes': #we need to ask the user the details of the new product
@@ -83,7 +83,7 @@ class Product:
     @classmethod
     def delete_product(cls, name_file):
         while True:
-            del_answer = input().strip().lower() #"Do you want to delete a product? Yes/No"
+            del_answer = input("Do you want to delete a product? Yes/No").strip().lower() #"Do you want to delete a product? Yes/No"
             if del_answer == 'no':
                 break
             elif del_answer == 'yes':

@@ -11,9 +11,9 @@ if __name__ == "__main__":
 
     stock = Stock(stock_file_path)  # create an object for stock
 
-    manager = Manager("Marina M", 25, "01/08/2000", 8000, "Resource Allocation", "Expert", 10)
-    operator = Operator("Andreea B", 23, "01/08/2003", 3000, "IDK", "Expert", 0)
-    stockKeeper = StockKeeper("Cristian P", 23, 2000, "01/08/2003", "Safety", "Expert", stock)
+    manager = Manager("Marina M", 25, "01/08/2000",8000)
+    operator = Operator("Andreea B", 23, "Operator", "01/08/2003",1000)
+    stockKeeper = StockKeeper("Cristian P", 2000, "Stock Keeper", "01/08/2003", stock)
 
     while True:
         print("\n===== MENU =====")
@@ -28,30 +28,29 @@ if __name__ == "__main__":
         print("0. Iesire")
         choice = input("Alege numarul unei optiuni: ")
 
-        if choice == "1":#TODO DONE
+        if choice == "1":
             manager.add_employees(employees_file_path)
 
-        elif choice == "2":#TODO DONE
+        elif choice == "2":
             manager.remove_employees(employees_file_path)
 
-        elif choice == "3":#TODO DONE
+        elif choice == "3":
             manager.display_employees(employees_file_path)
 
-        elif choice == "4":#TODO
+        elif choice == "4":
             Product.file_products(products_file_path)
-            Product.show_list_of_products()
+            Product.show_list_of_products() #  show the list of products
 
             product_name = input("Introduceti numele produsului pe care doriti sa-l produceti: ").strip()
             ingredients_list = get_ingredients_for_product(product_name, products_file_path)
-            print(f"Lista cu ingrediente pentru produsul : {product_name}     =>    {ingredients_list}")
+            print(f"Lista cu ingrediente =>    {ingredients_list}")
 
             if not ingredients_list:
                 print(f"Produsul '{product_name}' nu a fost gasit sau nu are ingrediente valide.")
                 continue
 
             if stock.verify_product_details(product_name, ingredients_list):
-
-                print(f"Materia primă este suficientă. Producem {product_name}...")
+                print(f"Materia prima este suficienta. Produc {product_name} ...")
                 for ingredient_dict in ingredients_list:
                     ingredient_name = list(ingredient_dict.keys())[0]
                     quantity_needed = list(ingredient_dict.values())[0]
@@ -59,9 +58,7 @@ if __name__ == "__main__":
                 stock.add_product_in_stock(product_name, 1)
                 print(f"Produsul '{product_name}' a fost creat cu succes!")
             else:
-                print(f"Materia prima este insuficientă pentru a produce {product_name}. Aprovizionam stocul...")
-                stockKeeper.supply_ingredients(
-                    [(list(ing.keys())[0], list(ing.values())[0]) for ing in ingredients_list])
+                print(f"Materia prima este insuficienta pentru a produce {product_name}.")
 
                 # Optiunea 4. Dam comanda de produse din fabrica: Se va face in display la produsele pe care fabrica le produce(Doar numele) ( (METODA PENTRU CLASA PRODUCT)
                     # Userul plaseaza o comanda pentru un produs :
@@ -79,24 +76,27 @@ if __name__ == "__main__":
                             # o metoda in clasa stock ce va adauga materie prima add_ingredient_in_stock(name_ingredient,quantity)
 
 
-        elif choice == "5": # TODO: la reteta trebuie adaugata cantitatea fiecarui element
+        elif choice == "5":
             # Optiunea 5. Creeam un produs nou. Avem input Denumirea si lista de dictionare ce reprezinta reteta produsului
             # Produsul va fi scris in fiserul csv corespunzator.
             Product.add_product(products_file_path)
 
-        elif choice == "6":#TODO nu se gaseste produsul ca sa-l sterg
+
+        elif choice == "6":
             Product.delete_product(products_file_path)
             # Optiunea 6. Elimina produs. (Pe langa ce are Marina de facut, in clasa package_cristi ai nevoie de o metoda ce
             # va avea ca parametrii denumirea produsului si va sterge din stock toata linia produsului.)
 
-        elif choice == "7":#TODO DONE
+        elif choice == "7":
             # Optiunea 7. Afisam stock. Metoda de display este in clasa stock dar este apelata prin magaziner.
             stockKeeper.show_stock()
 
         #Optiunea 8. Aceeasi metoda ca la 4.2 dar separat de momentul adaugarii.
         # # o metoda in clasa stock ce va adauga materie prima add_ingredient_in_stock(name_ingredient,quantity)
         elif choice == "8":
-            stockKeeper.supply_ingredients()
+            new_ingredient = input("Introduceti numele produsului : ")
+            quantity = input(f"Introduceti cantitatea pentru {new_ingredient}: ")
+            stock.add_ingredient_in_stock(new_ingredient, int(quantity))
         elif choice == "0":
             break
 
